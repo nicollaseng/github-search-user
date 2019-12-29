@@ -1,6 +1,6 @@
-import { createAction } from "redux-actions";
-import { setProperties } from "../functions/setProperty";
+import { actionCreator } from "./generator-action";
 
-const SET_USER = "SET_USER";
+import { SET_USER } from "./action-types";
 
-export const setUser = createAction(SET_USER, setProperties);
+export const dispatchUserInfo = (data: any) => async dispatch =>
+  actionCreator(SET_USER, data, dispatch);

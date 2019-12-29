@@ -1,11 +1,10 @@
-import api from "../api";
+import api from "../";
 
-import { setUser } from "../actions/github";
-import { endpoints } from "../api/endpoints";
+import { endpoints } from "../endpoints";
 
 const searchGitHubUser = async (user: string) => {
   const response = await api.get(`${endpoints.github}/${user}`);
-  setUser(response.data);
+  return response.data;
 };
 
 export { searchGitHubUser };

@@ -1,11 +1,14 @@
 import React from "react";
+
 import { connect } from "react-redux";
-import { searchGitHubUser } from "../../functions/github";
+import { dispatchUserInfo } from "../../actions/github";
+
+import { searchGitHubUser } from "../../api/requests/user";
 
 import Emoji from "../../components/Emoji";
 import Input from "../../components/Input";
 
-import { Text, Button, Container } from "../../styles";
+import { Text, Button, Container, Thumb } from "../../styles";
 
 const container = {
   display: "flex",
@@ -14,16 +17,37 @@ const container = {
   "align-items": "center",
   "justify-content": "center"
 };
+const centered = {
+  display: "flex",
+  flex: 1,
+  "flex-direction": "column",
+  "align-items": "center",
+  "justify-content": "center"
+};
+const subtitle = {
+  "font-family": "Courier Prime",
+  "font-size": 14,
+  color: "#d9d9d9"
+};
 const title = { color: "#d9d9d9" };
+const name = { color: "#d9d9d9", "font-size": 12, margin: 0 };
 const search = { color: "rgba(51, 51, 51, 1)", "font-size": 12, margin: 0 };
 
-const Search = ({ user, ...props }): JSX.Element => {
+const Home = ({
+  user,
+  dispatchUserInfo
+}: {
+  user?: any;
+  dispatchUserInfo: (param?: any) => void;
+}): JSX.Element => {
   const [input, setInput] = React.useState("");
 
   const handleInput = event => setInput(event.target.value);
-  const handleSearch = () => searchGitHubUser(input);
+  const handleSearch = async () => {
+    const response: object = await searchGitHubUser(input);
+    return dispatchUserInfo(response);
+  };
 
-  console.log(user);
   return (
     <Container>
       <Text {...title}>
@@ -31,6 +55,15 @@ const Search = ({ user, ...props }): JSX.Element => {
         <Emoji symbol="👋" label="sheep" />
         {"\n"}Welcome
       </Text>
+      <Text {...subtitle}>Search a github user</Text>
+      {user && (
+        <Container {...centered}>
+          <Thumb src={user.avatar_url} />
+          <Text {...name}>{user.name}</Text>
+          <Text {...name}>{user.company}</Text>
+          <Text {...name}>{user.blog}</Text>
+        </Container>
+      )}
       <Container {...container}>
         <Input onChange={handleInput} />
         <Button onClick={handleSearch}>
@@ -41,8 +74,12 @@ const Search = ({ user, ...props }): JSX.Element => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: { github? }) => ({
   user: state.github.user
 });
 
-export default connect(mapStateToProps)(Search);
+const mapDispatchToProps = { dispatchUserInfo };
+
+const Search = connect(mapStateToProps, mapDispatchToProps)(Home);
+
+export { Home, Search as default };

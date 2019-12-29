@@ -1,4 +1,5 @@
 import { ActionType } from "../ts/types";
+import { SET_USER } from "../actions/action-types";
 
 const initialState = {
   user: null,
@@ -7,14 +8,13 @@ const initialState = {
 };
 
 export default function(state = initialState, action: ActionType) {
-  console.log(action);
   const resolveReducer = (...args) => {
-    const [payload, ...rest] = args;
+    const [payload] = args;
     return { ...state, ...payload };
   };
 
   switch (action.type) {
-    case "SET_USER":
+    case SET_USER:
       return resolveReducer({ user: action.payload });
     default:
       return state;

@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { colors } from "../global/colors";
 
 const Button = styled.button`
-  width: ${props => (props.width ? props.width : "85px")};
-  height: ${props => (props.height ? props.height : "40px")};
+  margin: ${props => (props.margin ? props.margin : "0 10px")}
+  width: ${props => (props.width ? props.width : "70px")};
+  height: ${props => (props.height ? props.height : "35px")};
   background: ${props =>
     props.background ? props.background : colors.grey.grey1};
   padding: ${props => props.padding};
@@ -13,11 +14,13 @@ const Button = styled.button`
   border-width: ${props =>
     props["border-width"] ? props["border-width"] : "5px"};
   border-radius: ${props => (props["border-radius"] ? props[""] : "10px")};
+  ${props => props}
 `;
 
 const Container = styled.div`
   padding: 30px 30px;
   background: ${colors.background.primary};
+  ${props => props}
 `;
 
 const Input = styled.input`
