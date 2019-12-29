@@ -31,7 +31,7 @@ const subtitle = {
 };
 const title = { color: "#d9d9d9" };
 const name = { color: "#d9d9d9", "font-size": 12, margin: 0 };
-const search = { color: "rgba(51, 51, 54, 1)", "font-size": 12, margin: 0 };
+const search = { color: "rgba(51, 51, 51, 1)", "font-size": 12, margin: 0 };
 
 const Home = ({
   user,
